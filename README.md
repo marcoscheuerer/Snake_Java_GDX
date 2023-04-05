@@ -8,6 +8,8 @@ Simple snake game developed with the Java-Framework GDX.
 ![Snakehead](/assets/snakehead.png)
 ![Apple](/assets/apple.png)
 
+![UML](Snake_Java_GDX_UML.png)
+
 <i>
 <b>Log-History:</b>
 <br><br>

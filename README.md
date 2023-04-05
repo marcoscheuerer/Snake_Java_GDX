@@ -8,20 +8,23 @@ Simple snake game developed with the Java-Framework GDX.
 ![Snakehead](/assets/snakehead.png)
 ![Apple](/assets/apple.png)
 
+<ins>___Screenshots:___</ins>
+
 ![SnakeScreen](snake_screen.png)
+
+<ins>___UML-Diagram:___</ins>
+
 ![UML](Snake_Java_GDX_UML.png)
 
-<i>
-<b>Log-History:</b>
-<br><br>
+<ins>___Log-History:___</ins>
+
 <table>
 <thead>
   <th>Date</th><th>Task</th>
 </thead>
 <tbody>
   <tr>
-    <td>2023-04-05</td><td>Created an empty gdx-project for the game.</td>
+    <td>2023-04-05</td><td>Created an empty gdx-project for the game.<br />Added Snake, apple and implemented collision detection and snake growth.</td>
   </tr>
 </tbody>
 </table>
-</i>

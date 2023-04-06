@@ -40,6 +40,8 @@ public class GameScreen extends ScreenAdapter {
 	private ShapeRenderer shapeRenderer;
 	private static final int GRID_CELL = SNAKE_MOVEMENT;
 	
+	private boolean directionSet;
+	
 	@Override
 	public void show() {
 		shapeRenderer = new ShapeRenderer();
@@ -61,6 +63,7 @@ public class GameScreen extends ScreenAdapter {
 			checkForOutOfBounds();
 			updateBodyPartsPosition();
 			checkAppleCollision();
+			directionSet = false;
 		}
 		
 		checkAndPlaceApple();
@@ -139,10 +142,10 @@ public class GameScreen extends ScreenAdapter {
 		boolean dPressed = Gdx.input.isKeyPressed(Input.Keys.DOWN);
 		boolean escPressed = Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
 		
-		if (lPressed) snakeDirection = LEFT;
-		if (rPressed) snakeDirection = RIGHT;
-		if (uPressed) snakeDirection = UP;
-		if (dPressed) snakeDirection = DOWN;
+		if (lPressed) updateDirection(LEFT);
+		if (rPressed) updateDirection(RIGHT);
+		if (uPressed) updateDirection(UP);
+		if (dPressed) updateDirection(DOWN);
 		if (escPressed) Gdx.app.exit();
 	}
 	
@@ -203,5 +206,31 @@ public class GameScreen extends ScreenAdapter {
 		}
 		
 		shapeRenderer.end();
+	}
+	
+	private void updateIfNotOppositeDirection(int newSnakeDirection, int oppositeDirection) {
+		if (snakeDirection != oppositeDirection || bodyParts.size == 0)
+			snakeDirection = newSnakeDirection;
+	}
+	
+	private void updateDirection(int newSnakeDirection) {
+		if (!directionSet && snakeDirection != newSnakeDirection) {
+			directionSet = true;
+			switch(newSnakeDirection) {
+				case LEFT:
+					updateIfNotOppositeDirection(newSnakeDirection, RIGHT);
+					break;
+				case RIGHT:
+					updateIfNotOppositeDirection(newSnakeDirection, LEFT);
+					break;
+				case UP:
+					updateIfNotOppositeDirection(newSnakeDirection, DOWN);
+					break;
+				case DOWN:
+					updateIfNotOppositeDirection(newSnakeDirection, UP);
+					break;
+			
+			}
+		}
 	}
 }

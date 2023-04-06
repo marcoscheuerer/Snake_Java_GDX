@@ -18,6 +18,7 @@ public class GameScreen extends ScreenAdapter {
 	private Texture snakehead;
 	private Texture snakebody;
 	private Texture apple;
+	private Texture gras;
 	private Array<BodyPart> bodyParts = new Array<BodyPart>();
 	
 	private static final float MOVE_TIME = 0.3F;
@@ -41,6 +42,7 @@ public class GameScreen extends ScreenAdapter {
 	private static final int GRID_CELL = SNAKE_MOVEMENT;
 	
 	private boolean directionSet;
+	private boolean hasHit = false;
 	
 	@Override
 	public void show() {
@@ -49,28 +51,35 @@ public class GameScreen extends ScreenAdapter {
 		snakehead = new Texture(Gdx.files.internal("snakehead.png"));
 		snakebody = new Texture(Gdx.files.internal("snakebody.png"));
 		apple = new Texture(Gdx.files.internal("apple.png"));
+		gras = new Texture(Gdx.files.internal("gras.png"));
 	}
 	
 	@Override
 	public void render(float delta) {
 		queryInput();
 		
-		timer -= delta;
-		if (timer <= 0) {
-			timer = MOVE_TIME;
-			//snakeX += SNAKE_MOVEMENT;
-			moveSnake();
-			checkForOutOfBounds();
-			updateBodyPartsPosition();
-			checkAppleCollision();
-			directionSet = false;
-		}
+		updateSnake(delta);
 		
 		checkAndPlaceApple();
 		
 		clearScreen();
 		drawGrid();
 		draw();
+	}
+	
+	private void updateSnake(float delta) {
+		if (!hasHit) {
+			timer -= delta;
+			if (timer <= 0) {
+				timer = MOVE_TIME;
+				moveSnake();
+				checkForOutOfBounds();
+				updateBodyPartsPosition();
+				checkSnakeBodyCollision();
+				checkAppleCollision();
+				directionSet = false;
+			}		
+		}
 	}
 	
 	private void clearScreen() {
@@ -197,13 +206,17 @@ public class GameScreen extends ScreenAdapter {
 	}
 	
 	private void drawGrid() {
+		SpriteBatch grasBatch = new SpriteBatch();
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 		
+		grasBatch.begin();
 		for (int x = 0; x < Gdx.graphics.getWidth(); x += GRID_CELL) {
 			for (int y = 0; y < Gdx.graphics.getHeight(); y += GRID_CELL) {
-				shapeRenderer.rect(x, y, GRID_CELL, GRID_CELL);
+				//shapeRenderer.rect(x, y, GRID_CELL, GRID_CELL);
+				grasBatch.draw(gras, x, y);
 			}
 		}
+		grasBatch.end();
 		
 		shapeRenderer.end();
 	}
@@ -233,4 +246,11 @@ public class GameScreen extends ScreenAdapter {
 			}
 		}
 	}
+	
+	private void checkSnakeBodyCollision() {
+		for (BodyPart bodyPart : bodyParts)
+			if (bodyPart.x == snakeX && bodyPart.y == snakeY)
+				hasHit = true;
+	}
+	
 }

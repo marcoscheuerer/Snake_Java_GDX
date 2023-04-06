@@ -57,7 +57,11 @@ public class GameScreen extends ScreenAdapter {
 	private BitmapFont bitmapFont;
 	private GlyphLayout layout;
 	
-	private static final String GAME_OVER_TEXT = "Game Over... \n\n\nPress space to restart!\n\nPress escape to quit!"; 
+	private static final String GAME_OVER_TEXT = "Game Over... \n\n\nPress space to restart!\n\nPress escape to quit!";
+	
+	private int score = 0;
+	private static final int POINTS_PER_APPLE = 20;
+	
 	
 	@Override
 	public void show() {
@@ -127,7 +131,9 @@ public class GameScreen extends ScreenAdapter {
 		if (appleAvailable) {
 			batch.draw(apple, appleX, appleY);
 		}
-				
+		
+		drawScore();
+		
 		batch.end();
 		
 	}
@@ -203,6 +209,7 @@ public class GameScreen extends ScreenAdapter {
 			BodyPart bodyPart = new BodyPart(snakebody);
 			bodyPart.updateBodyPosition(snakeX, snakeY);
 			bodyParts.insert(0, bodyPart);
+			addToScore();
 			appleAvailable = false;
 		}
 	}
@@ -304,6 +311,21 @@ public class GameScreen extends ScreenAdapter {
 		snakeXBeforeUpdate = 0;
 		snakeYBeforeUpdate = 0;
 		appleAvailable = false;
+		score = 0;
+	}
+	
+	private void addToScore() {
+		score += POINTS_PER_APPLE;
+	}
+	
+	private void drawScore() {
+		if (state == STATE.PLAYING) {
+			String scoreAsString = Integer.toString(score);
+			layout.setText(bitmapFont, scoreAsString);
+			bitmapFont.setColor(Color.BLUE);
+			bitmapFont.draw(batch, "Score: ", Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - layout.height);
+			bitmapFont.draw(batch, scoreAsString, (Gdx.graphics.getWidth() - layout.width - 20), (Gdx.graphics.getHeight()) - layout.height);
+		}
 	}
 	
 }

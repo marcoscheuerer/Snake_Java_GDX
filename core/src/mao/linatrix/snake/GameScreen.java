@@ -1,7 +1,5 @@
 package mao.linatrix.snake;
 
-import java.awt.Font;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -15,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -47,7 +44,6 @@ public class GameScreen extends ScreenAdapter {
 	private static final int GRID_CELL = SNAKE_MOVEMENT;
 	
 	private boolean directionSet;
-	private boolean hasHit = false;
 	
 	private enum STATE {
 		PLAYING, GAME_OVER;
@@ -77,6 +73,7 @@ public class GameScreen extends ScreenAdapter {
 	
 	@Override
 	public void render(float delta) {
+		
 		switch (state) {
 			case PLAYING:
 				queryInput();
@@ -95,17 +92,15 @@ public class GameScreen extends ScreenAdapter {
 	}
 	
 	private void updateSnake(float delta) {
-		//if (!hasHit) {
-			timer -= delta;
-			if (timer <= 0) {
-				timer = MOVE_TIME;
-				moveSnake();
-				checkForOutOfBounds();
-				updateBodyPartsPosition();
-				checkSnakeBodyCollision();
-				directionSet = false;
-			}		
-		//}
+		timer -= delta;
+		if (timer <= 0) {
+			timer = MOVE_TIME;
+			moveSnake();
+			checkForOutOfBounds();
+			updateBodyPartsPosition();
+			checkSnakeBodyCollision();
+			directionSet = false;
+		}		
 	}
 	
 	private void clearScreen() {
@@ -119,6 +114,7 @@ public class GameScreen extends ScreenAdapter {
 		if (state == STATE.GAME_OVER) {
 			layout.setText(bitmapFont, GAME_OVER_TEXT);
 			bitmapFont.setColor(Color.RED);
+		
 			bitmapFont.draw(batch, GAME_OVER_TEXT, (Gdx.graphics.getWidth() - layout.width) / 2, (Gdx.graphics.getHeight() + layout.height) / 2);
 		}
 		
@@ -135,7 +131,6 @@ public class GameScreen extends ScreenAdapter {
 		drawScore();
 		
 		batch.end();
-		
 	}
 	
 	private void checkForOutOfBounds() {
@@ -249,7 +244,6 @@ public class GameScreen extends ScreenAdapter {
 		grasBatch.begin();
 		for (int x = 0; x < Gdx.graphics.getWidth(); x += GRID_CELL) {
 			for (int y = 0; y < Gdx.graphics.getHeight(); y += GRID_CELL) {
-				//shapeRenderer.rect(x, y, GRID_CELL, GRID_CELL);
 				grasBatch.draw(gras, x, y);
 			}
 		}
@@ -319,13 +313,15 @@ public class GameScreen extends ScreenAdapter {
 	}
 	
 	private void drawScore() {
-		if (state == STATE.PLAYING) {
+		//if (state == STATE.PLAYING) {
+			
 			String scoreAsString = Integer.toString(score);
 			layout.setText(bitmapFont, scoreAsString);
 			bitmapFont.setColor(Color.BLUE);
 			bitmapFont.draw(batch, "Score: ", Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - layout.height);
 			bitmapFont.draw(batch, scoreAsString, (Gdx.graphics.getWidth() - layout.width - 20), (Gdx.graphics.getHeight()) - layout.height);
-		}
+			
+		//}
 	}
 	
 }

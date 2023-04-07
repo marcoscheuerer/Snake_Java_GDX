@@ -77,9 +77,12 @@ public class GameScreen extends ScreenAdapter {
 		
 		shapeRenderer = new ShapeRenderer();
 		batch = new SpriteBatch();
-		snakehead = new Texture(Gdx.files.internal("snakehead.png"));
-		snakebody = new Texture(Gdx.files.internal("snakebody.png"));
-		apple = new Texture(Gdx.files.internal("apple.png"));
+		//snakehead = new Texture(Gdx.files.internal("snakehead.png"));
+		//snakebody = new Texture(Gdx.files.internal("snakebody.png"));
+		//apple = new Texture(Gdx.files.internal("apple.png"));
+		snakehead = new Texture(Gdx.files.internal("rabbit.png"));
+		snakebody = new Texture(Gdx.files.internal("basket.png"));
+		apple = new Texture(Gdx.files.internal("egg.png"));
 		gras = new Texture(Gdx.files.internal("gras.png"));
 		bitmapFont = new BitmapFont();
 		layout = new GlyphLayout();

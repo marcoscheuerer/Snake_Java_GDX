@@ -8,9 +8,9 @@ Simple snake game developed with the Java-Framework GDX.
 ![Snakehead](/assets/snakehead.png)
 ![Apple](/assets/apple.png)
 
-<ins>___Screenshots:___</ins>
+<ins>___Preview:___</ins>
 
-![SnakeScreen](snake_screenshot.png)
+![Snake game preview](snake_preview.gif)
 
 <ins>___UML-Diagram:___</ins>
 
@@ -28,6 +28,9 @@ Simple snake game developed with the Java-Framework GDX.
   </tr>
   <tr>
     <td>2023-04-06</td><td>Snake body collision, background, highscore, gameover screen added</td>
+  </tr>
+  <tr>
+    <td>2023-04-07</td><td>Viewport and camera implemented, preview of the game</td>
   </tr>
 </tbody>
 </table>
